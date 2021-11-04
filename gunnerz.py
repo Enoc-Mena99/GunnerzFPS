@@ -31,22 +31,18 @@ grenade = False
 grenade_thrown = False
 
 # load images
-# bullet
 bullet_img = pygame.image.load('images/icons/bullet.png').convert_alpha()
-# grenade
 grenade_img = pygame.image.load('images/icons/grenade.png').convert_alpha()
-
 
 # define game colors
 BG = (144, 201, 120)
 RED = (255, 0, 0)
 
-
 def draw_background():
     screen.fill(BG)
     pygame.draw.line(screen, RED, (0, 225), (screen_width, 225))
 
-
+#player class
 class Soldier(pygame.sprite.Sprite):
     def __init__(self, character_type, x, y, scale, speed, ammo, grenades):
         pygame.sprite.Sprite.__init__(self)
@@ -133,7 +129,7 @@ class Soldier(pygame.sprite.Sprite):
     def shoot(self):
         if self.shoot_cooldown == 0 and self.ammo > 0:
             self.shoot_cooldown = 20
-            bullet = Bullet(self.rect.centerx + (0.6 * self.rect.size[0] * self.direction), self.rect.centery,
+            bullet = Bullet(self.rect.centerx + (0.6 * self.rect.size[0] * self.direction), self.rect.centery + 10,
                             self.direction)
             bullet_group.add(bullet)
             # reduce ammo
@@ -174,7 +170,7 @@ class Soldier(pygame.sprite.Sprite):
     def drawCharacters(self):
         screen.blit(pygame.transform.flip(self.image, self.flip, False), self.rect)
 
-
+#bullet class
 class Bullet(pygame.sprite.Sprite):
     def __init__(self, x, y, direction):
         pygame.sprite.Sprite.__init__(self)
@@ -202,7 +198,7 @@ class Bullet(pygame.sprite.Sprite):
                 enemy.health -= 25
                 self.kill()
 
-
+#grenade class
 class Grenade(pygame.sprite.Sprite):
     def __init__(self, x, y, direction):
         pygame.sprite.Sprite.__init__(self)
@@ -234,8 +230,6 @@ class Grenade(pygame.sprite.Sprite):
         self.rect.y += ry
 
 
-
-
 # create sprite groups
 bullet_group = pygame.sprite.Group()
 grenade_group = pygame.sprite.Group()
@@ -247,10 +241,10 @@ enemy = Soldier('enemy', 400, 200, 1, 3, 20, 0)
 
 #####################################################
 
+
+##################################################Game*Runs*Here##################################################
 loop = True
 while loop:
-
-    clock.tick(FPS)
 
     draw_background()
 
@@ -319,6 +313,7 @@ while loop:
             if event.key == pygame.K_SPACE:
                 shoot = False
 
+    clock.tick(FPS)
     pygame.display.update()
 
 pygame.quit()
