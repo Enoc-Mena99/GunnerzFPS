@@ -6,8 +6,16 @@ the screen with this button class.
 
 import pygame
 
+#game window
+SCREEN_WIDTH = 800
+SCREEN_HEIGHT = 640
+LOWER_MARGIN = 100
+SIDE_MARGIN = 300
+
+screen = pygame.display.set_mode((SCREEN_WIDTH + SIDE_MARGIN, SCREEN_HEIGHT + LOWER_MARGIN))
+
 #button class
-class Button():
+class Button:
     def __init__(self, x, y, image, scale):
         width = image.get_width()
         height = image.get_height()
