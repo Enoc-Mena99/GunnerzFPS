@@ -26,6 +26,8 @@ pygame.display.set_caption('Level Editor')
 ROWS = 16
 MAX_COLS = 150
 TILE_SIZE = SCREEN_HEIGHT // ROWS
+TILE_TYPES = 7
+current_tile = 0
 
 scroll_left = False
 scroll_right = False
@@ -34,6 +36,12 @@ scroll_speed = 1
 
 #load images
 city_img = pygame.image.load('images/Background/city.png').convert_alpha()
+#store tiles in list
+img_list = []
+for x in range(TILE_TYPES):
+    img = pygame.image.load(f'images/tiles/{x}.png')
+    img = pygame.transform.scale(img, (TILE_SIZE, TILE_SIZE))
+    img_list.append(img)
 
 #define colors
 GREEN = (144, 201, 120)
@@ -57,6 +65,19 @@ def draw_grid():
     for c in range(ROWS + 1):
         pygame.draw.line(screen, WHITE, (0, c * TILE_SIZE), (SCREEN_WIDTH, c * TILE_SIZE))
 
+#create buttons
+#make button list
+button_list = []
+button_col = 0
+button_row = 0
+for i in range(len(img_list)):
+    tile_button = button.Button(SCREEN_WIDTH + (75 * button_col) + 50, 75 * button_row + 50, img_list[i], 1)
+    button_list.append(tile_button)
+    button_col += 1
+    if button_col == 3:
+        button_row += 1
+        button_col = 0
+
 #################################################Level*Editor*Runs*Here#################################################
 run = True
 while run:
@@ -65,6 +86,18 @@ while run:
 
     draw_bg()
     draw_grid()
+
+    #draw tile panel and tiles
+    pygame.draw.rect(screen, GREEN, (SCREEN_WIDTH, 0, SIDE_MARGIN, SCREEN_HEIGHT))
+
+    #choose a tile
+    button_count = 0
+    for button_count, i in enumerate(button_list):
+        if i.draw(screen):
+            current_tile = button_count
+
+    #highlight selected tile
+    pygame.draw.rect(screen, RED, button_list[current_tile].rect, 3)
 
     #scroll the map
     if scroll_left == True and scroll > 0:
@@ -84,6 +117,8 @@ while run:
                 scroll_right = True
             if event.key == pygame.K_RSHIFT:
                 scroll_speed = 5
+            if event.key == pygame.K_ESCAPE:
+                run = False
 
         if event.type == pygame.KEYUP:
             if event.key == pygame.K_LEFT:
