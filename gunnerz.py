@@ -234,6 +234,7 @@ class Grenade(pygame.sprite.Sprite):
 bullet_group = pygame.sprite.Group()
 grenade_group = pygame.sprite.Group()
 
+
 ######################PLAYERS########################
 
 player = Soldier('player', 200, 200, 1, 3, 20, 3)
