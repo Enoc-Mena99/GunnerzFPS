@@ -47,7 +47,6 @@ def draw_bg():
     for x in range(4):
         screen.blit(city_img, ((x * width)-scroll * 0.5, 0))
 
-
 #draw grid
 def draw_grid():
     #vertical lines
@@ -57,7 +56,6 @@ def draw_grid():
     #horizontal lines
     for c in range(ROWS + 1):
         pygame.draw.line(screen, WHITE, (0, c * TILE_SIZE), (SCREEN_WIDTH, c * TILE_SIZE))
-
 
 #################################################Level*Editor*Runs*Here#################################################
 run = True
@@ -73,7 +71,6 @@ while run:
         scroll -= 5 * scroll_speed
     if scroll_right == True:
         scroll += 5 * scroll_speed
-
 
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
@@ -95,7 +92,6 @@ while run:
                 scroll_right = False
             if event.key == pygame.K_RSHIFT:
                 scroll_speed = 1
-
 
     pygame.display.update()
 
